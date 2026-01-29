@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+</head>
+<body>
+<div id="auth-container">
+    <h2>Вход</h2>
+    <form id="login-form">
+        {% csrf_token %}
+        <input type="text" id="username" placeholder="Логин" required>
+        <input type="text" id="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+    </form>
+    <div id="error-message" style="color: red;"></div>
+    <div id="register-form" style="display: none;">
+        <h2>Регистрация</h2>
+        <form id="reg-form">
+            {% csrf_token %}
+            <input type="text" id="reg-username" placeholder="Логин" required>
+            <input type="email" id="reg-email" placeholder="Email" required>
+            <input type="password" id="reg-password" placeholder="Пароль" required>
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+    </div>
+</div>
+<script>
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const errorMessage = document.getElementById('error-message');
+
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const response = await fetch('/login/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': getCSRFToken()},
+            body: `username=${username}&password=${password}`
+        });
+        if (response.redirected) {
+            window.location.href = response.url;
+        } else {
+            const data = await response.json();
+            if (data.error === 'user_not_exists') {
+                errorMessage.textContent = 'Пользователь не существует. Зарегистрируйтесь.';
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                document.getElementById('reg-username').value = username;
+            } else if (data.error === 'invalid_password') {
+                errorMessage.textContent = 'Неверный пароль.';
+            }
+        }
+    });
+    registerForm.querySelector('#reg-form').addEventListener('submit', 
+        async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            const response = await fetch('/register/', {
+                method: 'POST',
+                headers: {'Content-Type':
+                    'application/x-www-form-urlencoded', 'X-CSRFToken': getCSRFToken()},
+                    body: `username=${username}&email=${email}&password=${password}`
+            });
+
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                const data = await response.json();
+                if (data.error === 'user_exists') {
+                    errorMessage.textContent = 'Пользователь уже существует.';
+                }
+            }
+        });
+
+        function getCSRFToken() {
+            return document.querySelector('[name=csrfmiddlewaretoken]').value;
+        }
+</script>
+</body>
+</html>
