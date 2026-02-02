@@ -3,84 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
+    <style>
+        #register-section { display: none; }
+        .error { color: red; }
+    </style>
 </head>
 <body>
+
 <div id="auth-container">
-    <h2>Вход</h2>
-    <form id="login-form">
+    <h2 id="form-title">Вход</h2>
+
+    <form method='post' id="login-section">
         {% csrf_token %}
-        <input type="text" id="username" placeholder="Логин" required>
-        <input type="text" id="password" placeholder="Пароль" required>
+        {{ login_form.as_p }}
         <button type="submit">Войти</button>
     </form>
-    <div id="error-message" style="color: red;"></div>
-    <div id="register-form" style="display: none;">
-        <h2>Регистрация</h2>
-        <form id="reg-form">
+
+    <div id="register-section">
+        <form method="post">
             {% csrf_token %}
-            <input type="text" id="reg-username" placeholder="Логин" required>
-            <input type="email" id="reg-email" placeholder="Email" required>
-            <input type="password" id="reg-password" placeholder="Пароль" required>
+            {{ reg_form.as_p }}
+
+            <div style="color: red; margin: 15px 0;">
+            {{ reg_form.non_field_errors }}
+            {% for field in reg_form %}
+                {% if field.errors %}
+                    <p>{{ field.label }}: {{ field.errors|join:", " }}</p>
+                {% endif %}
+            {% endfor %}
+            </div>
             <button type="submit">Зарегистрироваться</button>
         </form>
     </div>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p>
+        <a href="#" id="toggle-link">Нет аккаунта? Зарегистрироваться</a>
+    </p>
 </div>
+
 <script>
-    const loginForm = document.getElementById('login-form');
-    const registerForm = document.getElementById('register-form');
-    const errorMessage = document.getElementById('error-message');
+    const toggleLink = document.getElementById('toggle-link');
+    const loginSection = document.getElementById('login-section');
+    const registerSection = document.getElementById('register-section');
+    const title = document.getElementById('form-title');
 
-    loginForm.addEventListener('submit', async (e) => {
+    toggleLink.addEventListener('click', function(e){
         e.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        const response = await fetch('/login/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': getCSRFToken()},
-            body: `username=${username}&password=${password}`
-        });
-        if (response.redirected) {
-            window.location.href = response.url;
+        if (loginSection.style.display !== 'none') {
+            loginSection.style.display = 'none';
+            registerSection.style.display = 'block';
+            title.textContent = 'Регистрация';
+            toggleLink.textContent = 'Уже есть аккаунт? Войти';
         } else {
-            const data = await response.json();
-            if (data.error === 'user_not_exists') {
-                errorMessage.textContent = 'Пользователь не существует. Зарегистрируйтесь.';
-                loginForm.style.display = 'none';
-                registerForm.style.display = 'block';
-                document.getElementById('reg-username').value = username;
-            } else if (data.error === 'invalid_password') {
-                errorMessage.textContent = 'Неверный пароль.';
-            }
+            loginSection.style.display = 'block';
+            registerSection.style.display = 'none';
+            title.textContent = 'Вход';
+            toggleLink.textContent = 'Нет аккаунта? Зарегистрироваться';
         }
     });
-    registerForm.querySelector('#reg-form').addEventListener('submit', 
-        async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('reg-username').value;
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-password').value;
-
-            const response = await fetch('/register/', {
-                method: 'POST',
-                headers: {'Content-Type':
-                    'application/x-www-form-urlencoded', 'X-CSRFToken': getCSRFToken()},
-                    body: `username=${username}&email=${email}&password=${password}`
-            });
-
-            if (response.redirected) {
-                window.location.href = response.url;
-            } else {
-                const data = await response.json();
-                if (data.error === 'user_exists') {
-                    errorMessage.textContent = 'Пользователь уже существует.';
-                }
-            }
-        });
-
-        function getCSRFToken() {
-            return document.querySelector('[name=csrfmiddlewaretoken]').value;
-        }
 </script>
+
 </body>
 </html>
