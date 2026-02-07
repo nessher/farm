@@ -1,5 +1,5 @@
 from pyexpat.errors import messages
-
+from .forms import EmailAuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
@@ -30,13 +30,13 @@ def get_basket(request):
 
 def get_account_login(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = EmailAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
             return redirect('main')
     else:
-        form = AuthenticationForm()
+        form = EmailAuthenticationForm()
 
     return render(request, 'login.html', {'login_form': form, 'reg_form': ClientRegistrationForm()})
 
@@ -54,7 +54,6 @@ def get_account_register(request):
             return redirect('main')
         else:
             print("Form NOT valid!")
-            print("Errors:", form.errors.as_json(indent=2))
             print("Ошибки валидации формы:", form.errors.as_data())
     else:
         form = ClientRegistrationForm()
