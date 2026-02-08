@@ -5,6 +5,23 @@
     <title>Title</title>
 </head>
 <body>
+<p>Здесь домашняя страница</p>
+<script>
+  // Убираем хэш и предотвращаем возврат к старой форме
+  if (window.location.hash) {
+    // Чистим URL тихо
+    history.replaceState(null, null, window.location.pathname + window.location.search);
 
+    // Опционально: если вдруг пользователь попытается вернуться на /auth/
+    // можно добавить проверку, но обычно хватает чистки хэша
+  }
+
+  // Дополнительная защита: если на главной после логина
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {  // страница из bfcache (back/forward cache)
+      window.location.reload();  // принудительно перезагружаем
+    }
+  });
+</script>
 </body>
 </html>

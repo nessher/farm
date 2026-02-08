@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
     <title>Авторизация</title>
     <style>
         #register-section { display: none; }
         .error { color: red; }
+        .tab-active { font-weight: bold; color: #0066cc; }
     </style>
 </head>
 <body>
@@ -16,7 +20,17 @@
     <form method='post' id="login-section">
         {% csrf_token %}
         {{ login_form.as_p }}
-        <button type="submit">Войти</button>
+
+        <div class="error">
+            {{ login_form.non_field_errors}}
+            {% for field in login_form %}
+                {% if field.errors %}
+                    <p>{{ field.label }}: {{ field.errors|join:", " }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <button type="submit" name="login_submit">Войти</button>
     </form>
 
     <div id="register-section">
@@ -32,8 +46,10 @@
                 {% endif %}
             {% endfor %}
             </div>
-            <button type="submit">Зарегистрироваться</button>
+
+            <button type="submit" name="register_submit">Зарегистрироваться</button>
         </form>
+        
     </div>
     {% if messages %}
         <ul>
@@ -43,31 +59,64 @@
         </ul>
     {% endif %}
 
-    <p>
-        <a href="#" id="toggle-link">Нет аккаунта? Зарегистрироваться</a>
-    </p>
+    <a href="#register" id="to-register">Нет аккаунта? Зарегистрироваться</a>
+    <a href="#login" id="to-login" style="display: none;">Уже есть аккаунт? Войти</a>
 </div>
 
+{% if request.GET.just_logged_in %}
 <script>
-    const toggleLink = document.getElementById('toggle-link');
+  // Только что залогинились → сразу уходим на главную без хэша
+  window.location.replace("{% url 'main' %}");
+</script>
+{% endif %}
+
+<script>
     const loginSection = document.getElementById('login-section');
     const registerSection = document.getElementById('register-section');
     const title = document.getElementById('form-title');
+    const toRegisterLink = document.getElementById('to-register');
+    const toLoginLink = document.getElementById('to-login');
 
-    toggleLink.addEventListener('click', function(e){
-        e.preventDefault();
-        if (loginSection.style.display !== 'none') {
+    function showTab(tab) {
+        if (tab === 'register') {
             loginSection.style.display = 'none';
             registerSection.style.display = 'block';
             title.textContent = 'Регистрация';
-            toggleLink.textContent = 'Уже есть аккаунт? Войти';
+            toRegisterLink.style.display = 'none';
+            toLoginLink.style.display = 'inline';
+            history.replaceState(null, null, '#register');
         } else {
             loginSection.style.display = 'block';
             registerSection.style.display = 'none';
             title.textContent = 'Вход';
-            toggleLink.textContent = 'Нет аккаунта? Зарегистрироваться';
+            toRegisterLink.style.display = 'inline';
+            toLoginLink.style.display = 'none';
+            history.replaceState(null, null, '#login');
         }
+    }
+
+    function initFromHash() {
+        const hash = window.location.hash;
+        if (hash === '#register') {
+            showTab('register');
+        } else {
+            showTab('login');
+        }
+    }
+
+    toRegisterLink.addEventListener('click', e => {
+        e.preventDefault();
+        showTab('register');
     });
+
+    toLoginLink.addEventListener('click', e => {
+        e.preventDefault();
+        showTab('login');
+    });
+
+    window.addEventListener('hashchange', initFromHash);
+
+    initFromHash();
 </script>
 
 </body>
