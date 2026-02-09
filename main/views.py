@@ -11,7 +11,7 @@ from main.forms import ClientRegistrationForm
 
 
 def get_main(request):
-    return render(request, 'main.html')
+    return render(request, 'home_page.html')
 
 def get_about(request):
     return render(request, '')

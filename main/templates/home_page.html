@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif;">
+
+<!-- Ваш верхний серый контейнер -->
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;">
+
+    <!-- Левый блок: Контакты -->
+    <div style="flex: 1; text-align: left; font-size: 0.9em; color: #444; min-width: 200px;">
+        <span style="font-weight: bold; color: #000; font-size: 1.5em;">+375-33-316-47-08</span><br>
+        <span style="font-size: 1.3em;">Время работы: пн-птн, 09:00-18:00</span>
+    </div>
+
+    <!-- Центральный блок: Слоган -->
+    <div style="flex: 3; text-align: center; padding: 0 20px;">
+        <p style="margin: 0; font-family: 'Antica', serif; font-size: 2.0em; line-height: 1.1; color: #2c3e50; font-style: italic;">
+            От земли — на ваш стол! Фермерский эталон качества
+        </p>
+    </div>
+
+    <!-- Правый блок: Личный кабинет -->
+    <div style="flex: 1; text-align: right; min-width: 200px;">
+        <a href="#" style="text-decoration: none; color: #333; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.2em">👤 Личный кабинет</span>
+        </a>
+    </div>
+</div>
+
+<!-- БЛОК НАВИГАЦИИ С КОРРЕКТИРОВКОЙ ЛОГОТИПА -->
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1700px;
+            margin: 0 auto;
+            padding-left: 240px; /* Сильно увеличен отступ, чтобы логотип заходил за блок контактов */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+
+    <!-- Логотип (Увеличен) -->
+    <div style="display: flex; align-items: center; padding-right: 100px;">
+        <a href="">
+        <!-- Измени высоту здесь (например, на 160px) -->
+            <img src="http://127.0.0.1:8000/media/uploads/logo.png"
+             alt="ЛОГОТИП"
+             style="height: 150px; width: auto; display: block;">
+        </a>
+    </div>
+
+
+    <!-- Пункты меню -->
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-grow: 1; margin-right:150px;">
+    <!-- Увеличил шрифт до 1.2em и добавил font-weight: 800 (или 700) -->
+        <a href="" style="text-decoration: none; color: #006400; font-weight: 800; font-size: 1.3em; padding: 5px 0; ">Главная</a>
+
+    <!-- Для остальных просто увеличил font-size: 1.2em -->
+        <a href="" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">О нас</a>
+        <a href="" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Каталог</a>
+        <a href="" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Доставка</a>
+        <a href="" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Контакты</a>
+        <a href="" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Корзина</a>
+    </div>
+</div>
+
+<div style="position: relative; width: 100%; height: 650px;">
+    <!-- Картинка как фон -->
+    <img src="http://127.0.0.1:8000/media/uploads/vegatables.jpg"
+         alt="Картинка для первого фона"
+         style="height: 100%; width: 100%; object-fit: cover; display: block;">
+
+    <!-- Блок ТЕКСТА (прижат к верхнему краю) -->
+    <div style="position: absolute;
+                top: 5%; /* Регулируй этот процент, чтобы поднять еще выше */
+                left: 5%;
+                color: #006400;
+                text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+                font-family: 'Book Antiqua', serif;">
+        <h1 style="margin: 0; font-size: 2.5em; font-weight: 800; line-height: 1; ">«Настоящая королева стола:</h1>
+        <h1 style="margin: 10px 0 0 0; font-size: 2.0em; font-weight: 300; letter-spacing: 2px;">отборная фермерская картошечка и свежие овощи прямо с грядок»</h1>
+        <br>
+        <br>
+        <br>
+        <br>
+        <span style="font-size: 1.3em; font-style: italic; font-family: 'Georgia'">
+            Наши овощи не безликий товар! Это помидоры -
+        </span><br>
+        <span style="font-size: 1.3em; font-style: italic; font-family: 'Georgia'">
+            вобравшие летнее солнце, хрустящие огурцы с утренней росой и морковь, сладкая от нашей земли.
+        </span><br>
+        <span style="font-size: 1.3em; font-style: italic; font-family: 'Georgia'">
+            Мы знаем каждый куст и гордимся каждым урожаем.
+        </span><br>
+        <span style="font-size: 1.3em; font-style: italic; font-family: 'Georgia'">
+            который попадает к вашему столу.
+        </span>
+    </div>
+
+    <!-- Блок КНОПКИ (прижат к нижнему краю) -->
+    <div style="position: absolute;
+                bottom: 18%; /* Кнопка в 10% от низа картинки */
+                left: 10%;">
+        <a href="#order-form" style="display: inline-block;
+                           padding: 15px 50px;
+                           background-color: #006400; /* Чуть плотнее, чтобы не терялась */
+                           color: white;
+                           text-decoration: none;
+                           font-size: 1.5em;
+                           font-weight: bold;
+                           border-radius: 10px;
+                           border: 1px solid rgba(255, 255, 255, 0.8);
+                           box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                           backdrop-filter: blur(5px);
+                           transition: 0.3s;
+                           font-family: 'Antica', serif;">
+            Заказать
+        </a>
+    </div>
+</div>
+
+<div style="position: relative; width: 100%; height: 650px;">
+    <!-- Картинка как фон -->
+    <img src="http://127.0.0.1:8000/media/uploads/potato.avif"
+         alt="Картинка для первого фона"
+         style="height: 100%; width: 40%; object-fit: cover; display: block;">
+
+    <!-- Блок ТЕКСТА (прижат к верхнему краю) -->
+    <div style="position: absolute;
+                top: 5%; /* Регулируй этот процент, чтобы поднять еще выше */
+                left: 45%;
+                color: #006400;
+                text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+                font-family: 'Book Antiqua', serif;">
+        <h1 style="margin: 0; font-size: 3.9em; font-weight: 800; line-height: 1;">Свежее, Полезное и Вкусное</h1>
+    </div>
+    <div style="
+        position: absolute;
+        top: 25%; /* Регулируй этот процент, чтобы поднять еще выше */
+        left: 45%;
+        gap: 20px; /* Расстояние между элементами */
+        width: 900px; /* Ширина контейнера, как на картинке */
+        padding: 20px;
+        background-color: #ffffff; /* Белый фон формы */
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;">
+    <form id="order-form" method="POST" action="/path-to-your-view/">
+        <!-- Защитный токен, если используете Django -->
+        {% csrf_token %}
+
+        <!-- Группируем Имя и Фамилию в одну строку -->
+        <div style="display: flex; gap: 15px;">
+            <input type="text" name="name" placeholder="Имя*" required
+                   style="flex: 1; padding: 20px; border-radius: 5px; border: 1px solid #ccc; font-size: 1em;">
+            <input type="text" name="last_name" placeholder="Фамилия*" required
+                   style="flex: 1; padding: 20px; border-radius: 5px; border: 1px solid #ccc; font-size: 1em;">
+        </div>
+
+        <!-- Группируем Email и Телефон во вторую строку -->
+        <div style="display: flex; gap: 15px; margin-top: 15px;">
+            <input type="email" name="email" placeholder="Email адрес*" required
+                   style="flex: 1; padding: 20px; border-radius: 5px; border: 1px solid #ccc; font-size: 1em;">
+            <input type="tel" name="phone" placeholder="Номер телефона*" required
+                   style="flex: 1; padding: 20px; border-radius: 5px; border: 1px solid #ccc; font-size: 1em;">
+        </div>
+
+        <!-- Поле для сообщения -->
+        <textarea name="message" placeholder="Сообщение*" rows="4"
+                  style="width: 100%; padding: 30px; border-radius: 5px; border: 1px solid #ccc; margin-top: 15px; box-sizing: border-box; font-size: 1em;"></textarea>
+
+        <!-- Кнопка "Заказать" -->
+        <button type="submit" style="
+            display: block;
+            width: 100%;
+            margin-top: 25px; /* Отступ до кнопки */
+            padding: 20px;
+            background-color: #006400; /* Темно-зеленый цвет как на картинке */
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 100, 0, 0.3);
+            transition: background-color 0.3s;
+        ">
+            Заказать
+        </button>
+    </form>
+</div>
+
+</div>
+
+<div style="style=display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+            color: #006400;
+            box-sizing: border-box; font-style: italic; font-family: 'Georgia'">
+    <p>КФХ "Левкович" - "Вкус счастья": всегда свежие фермерские продукты в Минске и Минском районе</p>
+</div>
+
+
+
+
+
+</body>
+</html>
