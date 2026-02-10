@@ -65,10 +65,10 @@
         <a href="" style="text-decoration: none; color: #006400; font-weight: 800; font-size: 1.3em; padding: 5px 0; ">Главная</a>
 
     <!-- Для остальных просто увеличил font-size: 1.2em -->
-        <a href="" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">О нас</a>
+        <a href="{% url 'about' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">О нас</a>
         <a href="" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Каталог</a>
-        <a href="" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Доставка</a>
-        <a href="" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Контакты</a>
+        <a href="{% url 'delivery' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Доставка</a>
+        <a href="{% url 'contacts' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Контакты</a>
         <a href="" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Корзина</a>
     </div>
 </div>
@@ -154,7 +154,7 @@
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         font-family: Arial, sans-serif;">
-    <form id="order-form" method="POST" action="/path-to-your-view/">
+    <form id="order-form" method="POST">
         <!-- Защитный токен, если используете Django -->
         {% csrf_token %}
 

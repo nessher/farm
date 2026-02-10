@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Доставка</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif;">
+
+<!-- Ваш верхний серый контейнер -->
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;">
+
+    <!-- Левый блок: Контакты -->
+    <div style="flex: 1; text-align: left; font-size: 0.9em; color: #444; min-width: 200px;">
+        <span style="font-weight: bold; color: #000; font-size: 1.5em;">+375-33-316-47-08</span><br>
+        <span style="font-size: 1.3em;">Время работы: пн-птн, 09:00-18:00</span>
+    </div>
+
+    <!-- Центральный блок: Слоган -->
+    <div style="flex: 3; text-align: center; padding: 0 20px;">
+        <p style="margin: 0; font-family: 'Antica', serif; font-size: 2.0em; line-height: 1.1; color: #2c3e50; font-style: italic;">
+            От земли — на ваш стол! Фермерский эталон качества
+        </p>
+    </div>
+
+    <!-- Правый блок: Личный кабинет -->
+    <div style="flex: 1; text-align: right; min-width: 200px;">
+        <a href="" style="text-decoration: none; color: #333; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.2em">👤 Личный кабинет</span>
+        </a>
+    </div>
+</div>
+
+<!-- БЛОК НАВИГАЦИИ С КОРРЕКТИРОВКОЙ ЛОГОТИПА -->
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1700px;
+            margin: 0 auto;
+            padding-left: 240px; /* Сильно увеличен отступ, чтобы логотип заходил за блок контактов */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+
+    <!-- Логотип (Увеличен) -->
+    <div style="display: flex; align-items: center; padding-right: 100px;">
+        <a href="{% url 'main' %}">
+        <!-- Измени высоту здесь (например, на 160px) -->
+            <img src="http://127.0.0.1:8000/media/uploads/logo.png"
+             alt="ЛОГОТИП"
+             style="height: 150px; width: auto; display: block;">
+        </a>
+    </div>
+
+
+    <!-- Пункты меню -->
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-grow: 1; margin-right:150px;">
+    <!-- Увеличил шрифт до 1.2em и добавил font-weight: 800 (или 700) -->
+        <a href="{% url 'main' %}" style="text-decoration: none; color: #006400; font-weight: 800; font-size: 1.3em; padding: 5px 0; ">Главная</a>
+
+    <!-- Для остальных просто увеличил font-size: 1.2em -->
+        <a href="{% url 'about' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">О нас</a>
+        <a href="{% url 'catalog' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Каталог</a>
+        <a href="{% url 'delivery' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Доставка</a>
+        <a href="{% url 'contacts' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Контакты</a>
+        <a href="{% url 'basket' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Корзина</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<div style="max-width: 1100px; margin: 0 auto; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; text-align: center; padding: 20px;">
+
+    <!-- Заголовок секции -->
+    <div style="margin-bottom: 40px;">
+        <h1 style="color: #2d5a27; font-size: 2.2em; margin-bottom: 10px; letter-spacing: 1px;">МЫ УЖЕ ЕДЕМ К ВАМ! 🌳 🚚</h1>
+        <p style="font-size: 1.2em; color: #666; text-transform: uppercase; letter-spacing: 2px;">Условия доставки и оплаты</p>
+        <div style="width: 60px; height: 3px; background: #8eb486; margin: 15px auto;"></div>
+    </div>
+
+    <!-- Контейнер с этапами (Таблица-сетка) -->
+    <table border="0" cellpadding="0" cellspacing="15" width="100%">
+        <tr align="center" valign="top">
+
+            <!-- Шаг 1 -->
+            <td width="25%" style="background: #ffffff; border-radius: 15px; padding: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0;">
+                <div style="background: #e8f5e9; width: 50px; height: 50px; border-radius: 50%; line-height: 50px; margin: 0 auto 20px; font-size: 1.5em;">🛡️</div>
+                <h3 style="color: #2d5a27; font-size: 1.1em; margin-bottom: 15px; height: 45px; display: flex; align-items: center; justify-content: center;">ОФОРМИТЕ ЗАКАЗ ИЛИ ПОЗВОНИТЕ</h3>
+                <div style="text-align: left; font-size: 0.95em; color: #555;">
+                    <p style="margin-bottom: 10px;"><b style="color: #2d5a27;">Бесплатная доставка:</b><br>
+                    • от <span style="color: #000; font-weight: bold;">100 р.</span> (город)<br>
+                    • от <span style="color: #000; font-weight: bold;">120 р.</span> (за МКАД)</p>
+
+                    <p style="margin-bottom: 15px;"><b style="color: #2d5a27;">Платная доставка:</b><br>
+                    • город — <span style="color: #000; font-weight: bold;">8 р.</span><br>
+                    • за МКАД — <span style="color: #000; font-weight: bold;">11 р.</span></p>
+
+                    <p style="font-size: 0.85em; font-style: italic; border-top: 1px solid #eee; pt: 10px;">Менеджер свяжется с вами для подтверждения.</p>
+                </div>
+            </td>
+
+            <!-- Шаг 2 -->
+            <td width="25%" style="background: #ffffff; border-radius: 15px; padding: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0;">
+                <div style="background: #e3f2fd; width: 50px; height: 50px; border-radius: 50%; line-height: 50px; margin: 0 auto 20px; font-size: 1.5em;">💳</div>
+                <h3 style="color: #2d5a27; font-size: 1.1em; margin-bottom: 15px; height: 45px; display: flex; align-items: center; justify-content: center;">ОПЛАТИТЕ ПРИ ПОЛУЧЕНИИ</h3>
+                <p style="font-size: 0.95em; color: #555; text-align: left;">
+                    Вы можете оплатить заказ <b>наличными</b> или <b>банковской картой</b> через терминал курьеру в момент доставки. Никаких предоплат!
+                </p>
+            </td>
+
+            <!-- Шаг 3 -->
+            <td width="25%" style="background: #ffffff; border-radius: 15px; padding: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0;">
+                <div style="background: #fff3e0; width: 50px; height: 50px; border-radius: 50%; line-height: 50px; margin: 0 auto 20px; font-size: 1.5em;">💡</div>
+                <h3 style="color: #2d5a27; font-size: 1.1em; margin-bottom: 15px; height: 45px; display: flex; align-items: center; justify-content: center;">ПОЛУЧИТЕ ЗАКАЗ</h3>
+                <p style="font-size: 0.95em; color: #555; text-align: left;">
+                    <b style="color: #d84315;">График доставки:</b><br>
+                    Четверг — Пятница<br>
+                    <span style="font-size: 1.1em; font-weight: bold; color: #000;">16:00 — 22:00</span>
+                </p>
+                <p style="font-size: 0.9em; color: #777; margin-top: 10px; text-align: left;">Время согласуем индивидуально под ваш график.</p>
+            </td>
+
+            <!-- Шаг 4 -->
+            <td width="25%" style="background: #ffffff; border-radius: 15px; padding: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0;">
+                <div style="background: #f1f8e9; width: 50px; height: 50px; border-radius: 50%; line-height: 50px; margin: 0 auto 20px; font-size: 1.5em;">🌱</div>
+                <h3 style="color: #2d5a27; font-size: 1.1em; margin-bottom: 15px; height: 45px; display: flex; align-items: center; justify-content: center;">НАСЛАЖДАЙТЕСЬ!</h3>
+                <p style="font-size: 0.95em; color: #555; text-align: left;">
+                    Распакуйте ваши покупки и почувствуйте аромат настоящих продуктов! Приятного аппетита вашей семье.
+                </p>
+            </td>
+
+        </tr>
+    </table>
+
+    <p style="margin-top: 30px; color: #888; font-size: 0.9em;">* Доставка осуществляется собственной курьерской службой с соблюдением температурного режима.</p>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div style="style=display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+            color: #006400;
+            box-sizing: border-box; font-style: italic; font-family: 'Georgia'">
+    <p>КФХ "Левкович" - "Вкус счастья": всегда свежие фермерские продукты в Минске и Минском районе</p>
+</div>
+
+</body>
+</html>

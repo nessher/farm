@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>О нас</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif;">
+
+<!-- Ваш верхний серый контейнер -->
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;">
+
+    <!-- Левый блок: Контакты -->
+    <div style="flex: 1; text-align: left; font-size: 0.9em; color: #444; min-width: 200px;">
+        <span style="font-weight: bold; color: #000; font-size: 1.5em;">+375-33-316-47-08</span><br>
+        <span style="font-size: 1.3em;">Время работы: пн-птн, 09:00-18:00</span>
+    </div>
+
+    <!-- Центральный блок: Слоган -->
+    <div style="flex: 3; text-align: center; padding: 0 20px;">
+        <p style="margin: 0; font-family: 'Antica', serif; font-size: 2.0em; line-height: 1.1; color: #2c3e50; font-style: italic;">
+            От земли — на ваш стол! Фермерский эталон качества
+        </p>
+    </div>
+
+    <!-- Правый блок: Личный кабинет -->
+    <div style="flex: 1; text-align: right; min-width: 200px;">
+        <a href="" style="text-decoration: none; color: #333; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.2em">👤 Личный кабинет</span>
+        </a>
+    </div>
+</div>
+
+<!-- БЛОК НАВИГАЦИИ С КОРРЕКТИРОВКОЙ ЛОГОТИПА -->
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1700px;
+            margin: 0 auto;
+            padding-left: 240px; /* Сильно увеличен отступ, чтобы логотип заходил за блок контактов */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+
+    <!-- Логотип (Увеличен) -->
+    <div style="display: flex; align-items: center; padding-right: 100px;">
+        <a href="{% url 'main' %}">
+        <!-- Измени высоту здесь (например, на 160px) -->
+            <img src="http://127.0.0.1:8000/media/uploads/logo.png"
+             alt="ЛОГОТИП"
+             style="height: 150px; width: auto; display: block;">
+        </a>
+    </div>
+
+
+    <!-- Пункты меню -->
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-grow: 1; margin-right:150px;">
+    <!-- Увеличил шрифт до 1.2em и добавил font-weight: 800 (или 700) -->
+        <a href="{% url 'main' %}" style="text-decoration: none; color: #006400; font-weight: 800; font-size: 1.3em; padding: 5px 0; ">Главная</a>
+
+    <!-- Для остальных просто увеличил font-size: 1.2em -->
+        <a href="{% url 'about' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">О нас</a>
+        <a href="{% url 'catalog' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Каталог</a>
+        <a href="{% url 'delivery' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Доставка</a>
+        <a href="{% url 'contacts' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Контакты</a>
+        <a href="{% url 'basket' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Корзина</a>
+    </div>
+</div>
+
+<br>
+
+<div style="max-width: 1000px; margin: 0 auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2c3e50; line-height: 1.6; text-align: center;">
+
+    <!-- Шапка -->
+    <div style="padding: 40px 20px; background-color: #f9fbf9; border-radius: 20px; margin-bottom: 30px;">
+        <h1 style="color: #2d5a27; font-size: 2.5em; margin-bottom: 20px;">🌿 О нас: Возвращаясь к истокам</h1>
+        <p style="font-size: 1.2em; max-width: 800px; margin: 0 auto;">
+            <strong>Мы — «Вкус счастья»</strong>, команда энтузиастов, влюбленных в свое дело. Мы устали от безликих продуктов из супермаркетов и создали место, где еда снова обретает вкус, а фермерство — честное имя.
+        </p>
+    </div>
+
+    <h2 style="color: #2d5a27; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px;">Почему выбирают нас?</h2>
+
+    <!-- Блок преимуществ -->
+    <table border="0" cellpadding="0" cellspacing="15" width="100%" style="margin-bottom: 40px;">
+        <tr>
+            <td valign="top" width="33%" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 15px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <div style="font-size: 2.5em; margin-bottom: 10px;">🌿</div>
+                <h4 style="color: #2d5a27; margin-top: 0;">Чистота происхождения</h4>
+                <p style="font-size: 0.95em; color: #555;">Наши продукты растут в экологически чистых районах <b>Республики Беларусь</b>. Только естественное солнце и сила земли.</p>
+            </td>
+            <td valign="top" width="33%" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 15px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <div style="font-size: 2.5em; margin-bottom: 10px;">🐄</div>
+                <h4 style="color: #2d5a27; margin-top: 0;">Жизнь в движении</h4>
+                <p style="font-size: 0.95em; color: #555;">Наши куры гуляют на воле, а коровы пасутся на лугах. Мы верим: счастливые животные дают полезные продукты.</p>
+            </td>
+            <td valign="top" width="33%" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 15px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <div style="font-size: 2.5em; margin-bottom: 10px;">🤝</div>
+                <h4 style="color: #2d5a27; margin-top: 0;">Личный контроль</h4>
+                <p style="font-size: 0.95em; color: #555;">Мы лично знаем каждого фермера. В нашем ассортименте нет места антибиотикам, гормонам роста или пестицидам.</p>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Миссия и цитата -->
+    <div style="padding: 40px 20px; border-top: 2px solid #f0f0f0;">
+        <h3 style="color: #2d5a27; font-size: 1.8em;">Наша миссия</h3>
+        <p style="max-width: 700px; margin: 0 auto 30px auto; font-size: 1.1em;">
+            Дать вам возможность накормить свою семью едой с <span style="border-bottom: 2px solid #8eb486;">прозрачной историей</span>. Мы возвращаем тот самый «вкус детства».
+        </p>
+
+        <div style="background: #fdfaf4; padding: 30px; border-left: 5px solid #d4a373; border-radius: 5px; display: inline-block; max-width: 600px;">
+            <i style="font-size: 1.1em; color: #5d4037;">«В наших продуктах нет ничего лишнего. Только честный состав и чистая совесть».</i>
+        </div>
+    </div>
+
+    <!-- Футер блока -->
+    <div style="margin-top: 50px; padding: 40px; background: #2d5a27; color: #ffffff; border-radius: 20px;">
+        <h2 style="margin: 0; font-size: 2em;">От нашей земли — к вашему столу</h2>
+        <p style="font-size: 1.3em; letter-spacing: 3px; opacity: 0.9; margin-top: 10px;">ЧЕСТНО • ПРОСТО • ВКУСНО</p>
+    </div>
+
+</div>
+
+<div style="style=display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+            color: #006400;
+            box-sizing: border-box; font-style: italic; font-family: 'Georgia'">
+    <p>КФХ "Левкович" - "Вкус счастья": всегда свежие фермерские продукты в Минске и Минском районе</p>
+</div>
+
+
+</body>
+</html>

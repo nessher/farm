@@ -42,3 +42,19 @@ class EmailAuthenticationForm(AuthenticationForm):
         label='Email',
         max_length=254,
     )
+
+class FormTelegram(forms.Form):
+    name = forms.CharField()
+    surname = forms.CharField()
+    email = forms.EmailField()
+    phone = forms.NumberInput()
+    text = forms.Textarea()
+    class Meta:
+        fields = ('name', 'surname', 'email', 'phone', 'text')
+        labels = {
+            'name': 'Имя',
+            'surname': 'Фамилия',
+            'email': 'Email адрес',
+            'phone': 'Номер телефона',
+            'text': 'Сообщение',
+        }
