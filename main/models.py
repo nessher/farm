@@ -33,8 +33,8 @@ class Profile(models.Model):
         return f"Профиль {self.user.email or self.user.username}"
 
     class Meta:
-        verbose_name = "профиль"
-        verbose_name_plural = "профили"
+        verbose_name = "профиль пользователя"
+        verbose_name_plural = "профили пользователей"
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -50,8 +50,8 @@ class ProductCategory(models.Model):
     name = models.CharField(max_length=80, unique=True)
 
     class Meta:
-        verbose_name = "Категория"
-        verbose_name_plural = "Категории"
+        verbose_name = "Категория товара"
+        verbose_name_plural = "Категории товаров"
 
     def __str__(self):
         return self.name
@@ -65,16 +65,15 @@ class Product(models.Model):
         ('l', 'л'),
         ('pcs', 'шт'),
         ('dozen', 'дес'),
-        ('l_day', 'л/сут'),  # для суточного надоя молока
         ('pack', 'упак'),
     ], default='kg')
     price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-    is_animal = models.BooleanField("Продукция животноводства", default=False)
     description = models.TextField("Описание / сорт / особенности", blank=True)
+    photo = models.ImageField(upload_to='product_photos/', blank=True, null=True)
 
     class Meta:
-        verbose_name = "Продукт"
-        verbose_name_plural = "Продукты"
+        verbose_name = "Товар"
+        verbose_name_plural = "Товары"
 
     def __str__(self):
         return f'{self.name} ({self.unit})'

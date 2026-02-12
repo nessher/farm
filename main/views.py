@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
 from main.forms import ClientRegistrationForm
+from .models import Product
 from .telegram import send_telegram_message
 
 
@@ -70,7 +71,11 @@ def get_about(request):
     return render(request, 'about_farm.html')
 
 def get_catalog(request):
-    return render(request, '')
+    products = Product.objects.all()
+    context = {
+        'products': products
+    }
+    return render(request, 'catalog.html', context)
 
 def get_delivery(request):
     return render(request, 'delivery.html')
