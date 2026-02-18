@@ -48,6 +48,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=80, unique=True)
+    photo = models.ImageField(upload_to='category_photos/', blank=True, null=True)
 
     class Meta:
         verbose_name = "Категория товара"
