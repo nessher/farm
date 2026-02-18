@@ -4,20 +4,146 @@
     <meta charset="UTF-8">
     <title>Catalog</title>
 </head>
-<body>
-{% for category in categories %}
-    {{category.name}}
-{% endfor %}
-{% for product in products %}
-  <h3>{{product.name}}</h3>
-  <p>{{product.category}}</p>
-  <p>{{product.price}} за {{product.unit}}</p>
-  <p>{{product.description}}</p>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif;">
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;">
 
-  {% if product.photo %}
-    <img src="{{ product.photo.url }}" alt="{{ product.name }}" style="max-width: 300px;">
-  {% endif %}
-<hr>
-{% endfor %}
+    <!-- Левый блок: Контакты -->
+    <div style="flex: 1; text-align: left; font-size: 0.9em; color: #444; min-width: 200px;">
+        <span style="font-weight: bold; color: #000; font-size: 1.5em;">+375-33-316-47-08</span><br>
+        <span style="font-size: 1.3em;">Время работы: пн-птн, 09:00-18:00</span>
+    </div>
+
+    <!-- Центральный блок: Слоган -->
+    <div style="flex: 3; text-align: center; padding: 0 20px;">
+        <p style="margin: 0; font-family: 'Antica', serif; font-size: 2.0em; line-height: 1.1; color: #2c3e50; font-style: italic;">
+            От земли — на ваш стол! Фермерский эталон качества
+        </p>
+    </div>
+
+    <!-- Правый блок: Личный кабинет -->
+    <div style="flex: 1; text-align: right; min-width: 200px;">
+        <a href="" style="text-decoration: none; color: #333; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.2em">👤 Личный кабинет</span>
+        </a>
+    </div>
+</div>
+
+<!-- БЛОК НАВИГАЦИИ С КОРРЕКТИРОВКОЙ ЛОГОТИПА -->
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1700px;
+            margin: 0 auto;
+            padding-left: 240px; /* Сильно увеличен отступ, чтобы логотип заходил за блок контактов */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+
+    <!-- Логотип (Увеличен) -->
+    <div style="display: flex; align-items: center; padding-right: 100px;">
+        <a href="{% url 'main' %}">
+        <!-- Измени высоту здесь (например, на 160px) -->
+            <img src="http://127.0.0.1:8000/media/uploads/logo.png"
+             alt="ЛОГОТИП"
+             style="height: 150px; width: auto; display: block;">
+        </a>
+    </div>
+
+
+    <!-- Пункты меню -->
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-grow: 1; margin-right:150px;">
+    <!-- Увеличил шрифт до 1.2em и добавил font-weight: 800 (или 700) -->
+        <a href="{% url 'main' %}" style="text-decoration: none; color: #006400; font-weight: 800; font-size: 1.3em; padding: 5px 0; ">Главная</a>
+
+    <!-- Для остальных просто увеличил font-size: 1.2em -->
+        <a href="{% url 'about' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">О нас</a>
+        <a href="{% url 'catalog' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Каталог</a>
+        <a href="{% url 'delivery' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Доставка</a>
+        <a href="{% url 'contacts' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Контакты</a>
+        <a href="{% url 'basket' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Корзина</a>
+    </div>
+</div>
+
+<div style="font-family: sans-serif; max-width: 1200px; margin: 0 auto; ">
+
+  <!-- Увеличенный заголовок по центру -->
+  <h1 style="
+    text-align: center;
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+  ">
+    Категории
+  </h1>
+
+  <!-- Сетка с увеличенными плитками -->
+  <nav style="
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  ">
+    {% for category in categories %}
+      <a href="#" style="
+        text-decoration: none;
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid #e0e0e0;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+        display: flex;
+        flex-direction: column;
+      ">
+
+        <!-- Увеличенная высота картинки (220px вместо 150px) -->
+        <div style="width: 100%; height: 220px; background: #f0f0f0; overflow: hidden;">
+          {% if category.photo %}
+            <img src="{{ category.photo.url }}" alt="{{ category.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+          {% else %}
+            <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #bbb; font-size: 14px;">
+              Нет изображения
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Увеличенное название категории -->
+        <div style="
+          padding: 20px;
+          text-align: center;
+          color: #1a1a1a;
+          font-weight: 700;
+          font-size: 20px;
+          background: #ffffff;
+        ">
+          {{ category.name }}
+        </div>
+      </a>
+    {% endfor %}
+  </nav>
+</div>
+<br>
+<br>
+<div style="style=display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+            color: #006400;
+            box-sizing: border-box; font-style: italic; font-family: 'Georgia'">
+    <p>КФХ "Левкович" - "Вкус счастья": всегда свежие фермерские продукты в Минске и Минском районе</p>
+</div>
+
 </body>
 </html>

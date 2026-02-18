@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+</head>
+<body>
+{% for item in cart_items %}
+<div class="cart-item">
+    {% if item.product.photo %}
+    <img src="{{ item.product.photo.url }}" alt="{{ item.product.name }}" width="80">
+    {% endif %}
+    <div>
+        <strong>{{ item.product.name }}</strong><br>
+        Цена: {{ item.product.price }} ₽ / {{ item.product.get_unit_display }}<br>
+        Кол-во: {{ item.quantity }}<br>
+        Сумма: {{ item.total_price }} ₽
+    </div>
+</div>
+{% empty %}
+<p>Корзина пуста</p>
+{% endfor %}
+
+<h3>Итого: {{ total_price }} ₽ ({{ total_quantity }} позиций)</h3>
+</body>
+</html>

@@ -78,3 +78,35 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.unit})'
+
+class CartItem(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='cart_items'
+    )
+    session_key = models.CharField(max_length=40, null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = [
+            ('user', 'product'),  # один товар — одна строка у авторизованного
+            ('session_key', 'product'),  # то же для гостя
+        ]
+        verbose_name = "Позиция корзины"
+        verbose_name_plural = "Позиции корзины"
+
+    def __str__(self):
+        who = self.user.email if self.user else f"гость ({self.session_key[:8]}…)"
+        return f"{self.quantity} × {self.product.name} ({who})"
+
+    @property
+    def total_price(self):
+        if self.product.price is None:
+            return 0
+        return self.quantity * self.product.price

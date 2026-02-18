@@ -11,6 +11,8 @@ from django.views.decorators.csrf import csrf_protect
 from main.forms import ClientRegistrationForm
 from .models import Product, ProductCategory
 from .telegram import send_telegram_message
+from django.shortcuts import get_object_or_404
+from .cart import Cart
 
 
 def get_main(request):
@@ -86,7 +88,37 @@ def get_contacts(request):
     return render(request, 'contacts.html')
 
 def get_basket(request):
-    return render(request, '')
+    cart = Cart(request)
+    items = cart.get_items()
+
+    context = {
+        'cart_items': items,
+        'total_quantity': cart.get_total_quantity(),
+        'total_price': cart.get_total_price(),
+    }
+    return render(request, 'basket.html', context)
+
+def add_to_cart(request, product_id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Только POST'}, status=405)
+
+    product = get_object_or_404(Product, pk=product_id)
+    try:
+        quantity = int(request.POST.get('quantity', 1))
+        if quantity < 1:
+            quantity = 1
+    except (ValueError, TypeError):
+        quantity = 1
+
+    cart = Cart(request)
+    cart.add(product, quantity=quantity)
+
+    return JsonResponse({
+        'success': True,
+        'total_items': cart.get_total_quantity(),
+        'total_price': str(cart.get_total_price()),
+        'message': f'Добавлено: {quantity} × {product.name}'
+    })
 
 @never_cache
 @csrf_protect

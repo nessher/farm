@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from main.views import get_main, get_about, get_catalog, get_delivery, get_contacts, get_basket, account_auth
+from main.views import get_main, get_about, get_catalog, get_delivery, get_contacts, get_basket, account_auth, add_to_cart
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -28,6 +28,7 @@ urlpatterns = [
     path('delivery/', get_delivery, name = 'delivery'),
     path('contacts/', get_contacts, name = 'contacts'),
     path('basket/', get_basket, name = 'basket'),
+    path('cart/add/<int:product_id>/', add_to_cart, name='add_to_cart'),
     path('auth/', account_auth, name = 'auth'),
 ]
 if settings.DEBUG:
