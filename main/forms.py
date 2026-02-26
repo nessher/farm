@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django import forms
-# from main.models import CustomUser
+from main.models import Profile
 
 
 # class ClientRegistrationForm(UserCreationForm):
@@ -42,6 +42,16 @@ class EmailAuthenticationForm(AuthenticationForm):
         label='Email',
         max_length=254,
     )
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['phone']
+
+class UserEditForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
 
 class FormTelegram(forms.Form):
     name = forms.CharField()

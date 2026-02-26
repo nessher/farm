@@ -4,23 +4,36 @@
     <meta charset="UTF-8">
     <title>Корзина</title>
 </head>
-<body>
-{% for item in cart_items %}
-<div class="cart-item">
-    {% if item.product.photo %}
-    <img src="{{ item.product.photo.url }}" alt="{{ item.product.name }}" width="80">
-    {% endif %}
-    <div>
-        <strong>{{ item.product.name }}</strong><br>
-        Цена: {{ item.product.price }} ₽ / {{ item.product.get_unit_display }}<br>
-        Кол-во: {{ item.quantity }}<br>
-        Сумма: {{ item.total_price }} ₽
-    </div>
-</div>
-{% empty %}
-<p>Корзина пуста</p>
-{% endfor %}
+<body style="font-family: sans-serif; background: #f4f4f4; padding: 40px;">
+    <div style="max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        <h2 style="border-bottom: 2px solid #eee; padding-bottom: 15px;">Ваша корзина</h2>
 
-<h3>Итого: {{ total_price }} ₽ ({{ total_quantity }} позиций)</h3>
+        {% if cart_items %}
+            {% for item in cart_items %}
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee;">
+                <div style="display: flex; align-items: center;">
+                    <img src="{{ item.product.photo.url }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 15px;">
+                    <div>
+                        <div style="font-weight: bold;">{{ item.product.name }}</div>
+                        <div style="color: #666; font-size: 0.9em;">{{ item.product.price }} ₽ x {{ item.quantity }}</div>
+                    </div>
+                </div>
+                <div style="font-weight: bold; font-size: 1.1em;">{{ item.total_price }} ₽</div>
+            </div>
+            {% endfor %}
+
+            <div style="margin-top: 25px; text-align: right;">
+                <span style="font-size: 1.2em; color: #888;">Итого к оплате:</span>
+                <span style="font-size: 1.8em; font-weight: bold; color: #27ae60; margin-left: 15px;">{{ total_price }} ₽</span>
+            </div>
+			<div style="margin-top: 30px; display: flex; justify-content: space-between;">
+                <a href="/" style="text-decoration: none; color: #3498db;">← Продолжить покупки</a>
+                <a href="{% url 'checkout' %}" style="background: #27ae60; color: white; border: none; padding: 12px 25px; border-radius: 6px; font-weight: bold; cursor: pointer;"> Оформить заказ </a>
+            </div>
+        {% else %}
+            <p style="text-align: center; color: #999; padding: 40px 0;">Корзина пока пуста</p>
+            <div style="text-align: center;"><a href="/" style="color: #3498db;">Перейти в каталог</a></div>
+        {% endif %}
+    </div>
 </body>
 </html>

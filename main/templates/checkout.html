@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+</head>
+<body>
+<div class="container" style="max-width: 900px; margin: 40px auto;">
+    <h1>Оформление заказа</h1>
+
+    <h3>Товары в заказе</h3>
+    <table style="width:100%; border-collapse: collapse; margin-bottom: 30px;">
+        <thead>
+            <tr style="background:#f0f8f0;">
+                <th>Товар</th>
+                <th>Кол-во</th>
+                <th>Цена</th>
+                <th>Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.product.price|floatformat:2 }} ₽</td>
+                <td>{{ item.total|floatformat:2 }} ₽</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr style="font-weight:bold;">
+                <td colspan="3" style="text-align:right;">Итого:</td>
+                <td>{{ total_price|floatformat:2 }} ₽</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <form method="post" style="background:#fff; padding:30px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+        {% csrf_token %}
+
+        <label>Адрес доставки *</label><br>
+        <textarea name="delivery_address" rows="3" required style="width:100%; padding:10px; margin-bottom:15px;"></textarea>
+
+        <label>Телефон для связи *</label><br>
+        <input type="tel" name="phone" value="{{ user.profile.phone|default:'' }}" required style="width:100%; padding:10px; margin-bottom:15px;">
+
+        <label>Комментарий к заказу</label><br>
+        <textarea name="comment" rows="4" style="width:100%; padding:10px; margin-bottom:20px;"></textarea>
+
+        <button type="submit" style="
+            background:#28a745;
+            color:white;
+            border:none;
+            padding:14px 30px;
+            font-size:1.1rem;
+            border-radius:10px;
+            cursor:pointer;
+        ">
+            Оформить заказ
+        </button>
+    </form>
+
+    <p style="margin-top:20px; text-align:center; color:#555;">
+        После оформления мы свяжемся с вами для подтверждения
+    </p>
+</div>
+</body>
+</html>

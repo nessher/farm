@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from main.views import get_main, get_about, get_catalog, get_category_catalog, get_delivery, get_contacts, get_basket, account_auth
+from main.views import get_main, get_about, get_catalog, get_category_catalog, get_delivery, get_contacts, cart_add, \
+    cart_detail, account_auth, profile, checkout, orders
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,8 +30,13 @@ urlpatterns = [
     path('catalog/<int:id>/', get_catalog, name = 'catalog_current'),
     path('delivery/', get_delivery, name = 'delivery'),
     path('contacts/', get_contacts, name = 'contacts'),
-    path('basket/', get_basket, name = 'basket'),
+    path('cart/', cart_detail, name = 'cart_detail'),
+    path('cart/add/<int:product_id>/', cart_add, name='cart_add'),
+    path('checkout/', checkout, name='checkout'),
+    path('orders/', orders, name='orders'),
     path('auth/', account_auth, name = 'auth'),
+    path('profile/', profile, name = 'profile'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

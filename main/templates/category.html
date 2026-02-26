@@ -1,16 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{{category.name}}</title>
+    <title>{{ category.name }}</title>
 </head>
-<body>
-{% for product in products %}
-{{product.name}}
-{{product.price}}
-{{product.unit}}
-{{product.description}}
-<img src="{{product.photo.url}}" alt="{{product.name}}">
-{% endfor %}
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif;">
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;">
+
+    <!-- Левый блок: Контакты -->
+    <div style="flex: 1; text-align: left; font-size: 0.9em; color: #444; min-width: 200px;">
+        <span style="font-weight: bold; color: #000; font-size: 1.5em;">+375-33-316-47-08</span><br>
+        <span style="font-size: 1.3em;">Время работы: пн-птн, 09:00-18:00</span>
+    </div>
+
+    <!-- Центральный блок: Слоган -->
+    <div style="flex: 3; text-align: center; padding: 0 20px;">
+        <p style="margin: 0; font-family: 'Antica', serif; font-size: 2.0em; line-height: 1.1; color: #2c3e50; font-style: italic;">
+            От земли — на ваш стол! Фермерский эталон качества
+        </p>
+    </div>
+
+    <!-- Правый блок: Личный кабинет -->
+    <div style="flex: 1; text-align: right; min-width: 200px;">
+        <a href="{% url 'auth' %}" style="text-decoration: none; color: #333; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.2em">👤 Личный кабинет</span>
+        </a>
+    </div>
+</div>
+
+<!-- БЛОК НАВИГАЦИИ С КОРРЕКТИРОВКОЙ ЛОГОТИПА -->
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1700px;
+            margin: 0 auto;
+            padding-left: 240px; /* Сильно увеличен отступ, чтобы логотип заходил за блок контактов */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+
+    <!-- Логотип (Увеличен) -->
+    <div style="display: flex; align-items: center; padding-right: 100px;">
+        <a href="{% url 'main' %}">
+        <!-- Измени высоту здесь (например, на 160px) -->
+            <img src="http://127.0.0.1:8000/media/uploads/logo.png"
+             alt="ЛОГОТИП"
+             style="height: 150px; width: auto; display: block;">
+        </a>
+    </div>
+
+
+    <!-- Пункты меню -->
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-grow: 1; margin-right:150px;">
+    <!-- Увеличил шрифт до 1.2em и добавил font-weight: 800 (или 700) -->
+        <a href="{% url 'main' %}" style="text-decoration: none; color: #006400; font-weight: 800; font-size: 1.3em; padding: 5px 0; ">Главная</a>
+
+    <!-- Для остальных просто увеличил font-size: 1.2em -->
+        <a href="{% url 'about' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">О нас</a>
+        <a href="{% url 'catalog' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Каталог</a>
+        <a href="{% url 'delivery' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Доставка</a>
+        <a href="{% url 'contacts' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Контакты</a>
+        <a href="{% url 'cart_detail' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Корзина</a>
+    </div>
+</div>
+    <h1 style="text-align: center; margin-bottom: 40px; color: #2c3e50; font-weight: 300; font-size: 2.5em;">
+        {{ category.name }}
+    </h1>
+
+    <!-- Контейнер для центрирования сетки -->
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+
+        {% for product in products %}
+        <!-- Карточка товара -->
+        <div style="background: #ffffff; width: 300px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; transition: 0.3s;">
+
+            <!-- Блок с изображением -->
+            <div style="height: 220px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                {% if product.photo %}
+                    <img src="{{ product.photo.url }}" alt="{{ product.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                {% else %}
+                    <span style="color: #999; font-style: italic;">Фото отсутствует</span>
+                {% endif %}
+            </div>
+
+            <!-- Текстовый блок -->
+            <div style="padding: 20px; flex-grow: 1;">
+                <h3 style="margin: 0 0 10px 0; font-size: 1.4em; color: #222;">{{ product.name }}</h3>
+
+                <div style="margin-bottom: 15px;">
+                    <span style="font-size: 1.5em; font-weight: bold; color: #27ae60;">{{ product.price }} ₽</span>
+                    <span style="color: #888; font-size: 0.9em;">/ {{ product.unit }}</span>
+                </div>
+
+                <p style="font-size: 0.95em; line-height: 1.6; color: #666; margin: 0;">
+                    {{ product.description|truncatewords:20 }}
+                </p>
+            </div>
+
+            <!-- Нижняя плашка (имитация кнопки или просто разделитель) -->
+            <div style="padding: 15px 20px; border-top: 1px solid #eee; text-align: center; background: #fafafa;">
+                <button class="btn-add js-add-to-cart" data-product-id="{{ product.id }}" data-url="{% url 'cart_add' product.id %}">
+                    + В корзину
+                </button>
+                <span style="color: #3498db; font-weight: 600; cursor: pointer;">Подробнее</span>
+            </div>
+        </div>
+        {% empty %}
+        <p style="text-align: center; color: #999; font-size: 1.2em;">Товары не найдены.</p>
+        {% endfor %}
+
+    </div>
+<br>
+<br>
+<div style="style=display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+            color: #006400;
+            box-sizing: border-box; font-style: italic; font-family: 'Georgia'">
+    <p>КФХ "Левкович" - "Вкус счастья": всегда свежие фермерские продукты в Минске и Минском районе</p>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".js-add-to-cart").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            const url = btn.dataset.url;
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ quantity: 1 })
+                });
+
+                if (!response.ok) throw new Error("Ошибка");
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Показываем уведомление (можно заменить на красивый toast)
+                    alert(data.message);
+
+                    // Обновляем счётчик корзины в шапке, если есть
+                    const cartCount = document.querySelector("#cart-count");
+                    if (cartCount) {
+                        cartCount.textContent = data.total_items;
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Не удалось добавить товар");
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
