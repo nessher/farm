@@ -213,23 +213,35 @@
                 {{ user.profile.phone|default:"Не указан" }}
             </div>
             <div class="info-item">
-                <strong>Роль</strong>
-                {{ user.profile.get_role_display }}
-            </div>
-            <div class="info-item">
                 <strong>Дата регистрации</strong>
                 {{ user.date_joined|date:"d.m.Y" }}
             </div>
             <div class="info-item">
                 <strong>Заказы</strong>
-                0 (пока нет)
+                {% if orders_count %}
+                    {{ orders_count }}
+                    {% if orders_count == 1 %}
+                        заказ
+                    {% elif orders_count in "234" or orders_count|divisibleby:10 == 0 and orders_count|divisibleby:100 != 0 %}
+                        заказа
+                    {% else %}
+                        заказов
+                    {% endif %}
+                {% else %}
+                    0 (пока нет)
+                {% endif %}
             </div>
         </div>
 
         <div class="actions">
-            <a href="#'profile_edit'" class="btn btn-primary">Редактировать профиль</a>
-            <a href="#'password_change'" class="btn btn-outline">Сменить пароль</a>
-            <a href="#'logout'" class="btn btn-danger">Выйти</a>
+            <a href="{% url 'profile_edit' %}" class="btn btn-primary">Редактировать профиль</a>
+            <a href="{% url 'password_change' %}" class="btn btn-outline">Сменить пароль</a>
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Выйти</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 

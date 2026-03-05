@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main.views import get_main, get_about, get_catalog, get_category_catalog, get_delivery, get_contacts, cart_add, \
-    cart_detail, account_auth, profile, checkout, orders
+    cart_detail, account_auth, profile, checkout, orders, order_detail, profile_edit
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -34,8 +34,13 @@ urlpatterns = [
     path('cart/add/<int:product_id>/', cart_add, name='cart_add'),
     path('checkout/', checkout, name='checkout'),
     path('orders/', orders, name='orders'),
+    path('orders/<int:order_id>/', order_detail, name='order_detail'),
     path('auth/', account_auth, name = 'auth'),
     path('profile/', profile, name = 'profile'),
+    path('profile/edit/', profile_edit, name = 'profile_edit'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('profile/password_change/', auth_views.PasswordChangeView.as_view(template_name='registration/password_change_form.html'), name='password_change'),
+    path('profile/password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
 
 ]
 if settings.DEBUG:

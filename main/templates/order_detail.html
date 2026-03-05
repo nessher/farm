@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" style="max-width: 1000px; margin: 40px auto; padding: 20px;">
+    <h1 style="color: #006400; margin-bottom: 30px;">Заказ №{{ order.id }}</h1>
+
+    <div style="display: flex; justify-content: space-between; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
+        <div>
+            <strong>Дата создания:</strong> {{ order.created_at|date:"d.m.Y H:i" }}<br>
+            <strong>Статус:</strong> {{ order.get_status_display }}<br>
+            <strong>Общая сумма:</strong> {{ order.total_price|floatformat:2 }} ₽
+        </div>
+
+        <div>
+            <strong>Адрес доставки:</strong><br>
+            {{ order.delivery_address|linebreaksbr|default:"Не указан" }}
+        </div>
+
+        <div>
+            <strong>Телефон:</strong> {{ order.phone|default:"Не указан" }}<br>
+            <strong>Комментарий:</strong><br>
+            {{ order.comment|linebreaksbr|default:"—" }}
+        </div>
+    </div>
+
+    <h2 style="color: #006400; margin: 30px 0 15px;">Товары в заказе</h2>
+
+    <table style="width:100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+        <thead style="background: #e8f5e9;">
+            <tr>
+                <th style="padding: 15px; text-align: left;">Товар</th>
+                <th style="padding: 15px;">Количество</th>
+                <th style="padding: 15px;">Цена за ед.</th>
+                <th style="padding: 15px;">Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 15px;">
+                    {% if item.product.photo %}
+                        <img src="{{ item.product.photo.url }}" alt="{{ item.product.name }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px; vertical-align: middle; margin-right: 12px;">
+                    {% endif %}
+                    {{ item.product.name|default:"Товар удалён" }}
+                </td>
+                <td style="padding: 15px; text-align: center;">{{ item.quantity }} {{ item.product.get_unit_display|default:"шт" }}</td>
+                <td style="padding: 15px; text-align: right;">{{ item.price_at_order|floatformat:2 }} ₽</td>
+                <td style="padding: 15px; text-align: right; font-weight: bold;">{{ item.subtotal|floatformat:2 }} ₽</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4" style="padding: 30px; text-align: center; color: #777;">
+                    Позиции заказа отсутствуют
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot style="background: #f8fff8; font-weight: bold;">
+            <tr>
+                <td colspan="3" style="padding: 15px; text-align: right;">Итого:</td>
+                <td style="padding: 15px; text-align: right;">{{ total_price|floatformat:2 }} ₽</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div style="margin-top: 40px; text-align: center;">
+        <a href="{% url 'orders' %}" style="
+            background: #006400;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+        ">
+            ← Назад к списку заказов
+        </a>
+    </div>
+</div>
+</body>
+</html>

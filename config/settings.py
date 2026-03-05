@@ -55,7 +55,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,3 +131,5 @@ LOGIN_REDIRECT_URL = 'main'
 
 TELEGRAM_BOT_TOKEN = '8446389475:AAGWMsq8RcYhu8LEt5qVX6pwAc6L3jT70EI'
 TELEGRAM_ADMIN_CHAT_ID = '444310243'
+
+LOGOUT_REDIRECT_URL = 'main'

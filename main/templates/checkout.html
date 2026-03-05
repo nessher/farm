@@ -1,69 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Checkout</title>
+    <title>Оформление заказа</title>
 </head>
-<body>
-<div class="container" style="max-width: 900px; margin: 40px auto;">
-    <h1>Оформление заказа</h1>
+<body style="background-color: #f4f7f6; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #333; margin: 0; padding: 0;">
 
-    <h3>Товары в заказе</h3>
-    <table style="width:100%; border-collapse: collapse; margin-bottom: 30px;">
-        <thead>
-            <tr style="background:#f0f8f0;">
-                <th>Товар</th>
-                <th>Кол-во</th>
-                <th>Цена</th>
-                <th>Сумма</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for item in cart_items %}
-            <tr>
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ item.product.price|floatformat:2 }} ₽</td>
-                <td>{{ item.total|floatformat:2 }} ₽</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr style="font-weight:bold;">
-                <td colspan="3" style="text-align:right;">Итого:</td>
-                <td>{{ total_price|floatformat:2 }} ₽</td>
-            </tr>
-        </tfoot>
-    </table>
+<div class="container" style="max-width: 800px; margin: 50px auto; padding: 20px;">
 
-    <form method="post" style="background:#fff; padding:30px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+    <h1 style="text-align: center; color: #2c3e50; margin-bottom: 40px; font-size: 2.2rem;">Оформление заказа</h1>
+
+    <h3 style="border-left: 5px solid #27ae60; padding-left: 15px; margin-bottom: 20px; color: #2c3e50;">Товары в заказе</h3>
+
+    <!-- Таблица товаров -->
+    <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; border: 1px solid #e0e0e0;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="background: #f9fbf9; border-bottom: 2px solid #edf2f0;">
+                    <th style="padding: 15px; font-weight: 600; color: #7f8c8d;">Товар</th>
+                    <th style="padding: 15px; font-weight: 600; color: #7f8c8d; text-align: center;">Кол-во</th>
+                    <th style="padding: 15px; font-weight: 600; color: #7f8c8d;">Цена</th>
+                    <th style="padding: 15px; font-weight: 600; color: #7f8c8d;">Сумма</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in cart_items %}
+                <tr style="border-bottom: 1px solid #f1f1f1;">
+                    <td style="padding: 15px; font-weight: 500;">{{ item.product.name }}</td>
+                    <td style="padding: 15px; text-align: center;">{{ item.quantity }}</td>
+                    <td style="padding: 15px;">{{ item.product.price|floatformat:2 }} ₽</td>
+                    <td style="padding: 15px; font-weight: 600; color: #2c3e50;">{{ item.total|floatformat:2 }} ₽</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr style="background: #f9fbf9;">
+                    <td colspan="3" style="padding: 20px; text-align: right; font-size: 1.1rem; color: #7f8c8d;">Итого к оплате:</td>
+                    <td style="padding: 20px; font-size: 1.3rem; font-weight: 800; color: #27ae60;">{{ total_price|floatformat:2 }} ₽</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <!-- Форма заказа -->
+    <form method="post" style="background: #ffffff; padding: 40px; border-radius: 16px; border: 1px solid #e0e0e0; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
         {% csrf_token %}
 
-        <label>Адрес доставки *</label><br>
-        <textarea name="delivery_address" rows="3" required style="width:100%; padding:10px; margin-bottom:15px;"></textarea>
+        {% if not user.is_authenticated %}
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
+                Ваше имя <span style="color: #e74c3c;">*</span>
+            </label>
+            <input type="text" name="guest_name" required
+                   value="{{ guest_name|default:'' }}"
+                   placeholder="Иван Иванов"
+                   style="width: 100%; padding: 12px; border: 2px solid #ebedef; border-radius: 8px; font-family: inherit; font-size: 1rem; box-sizing: border-box; outline: none; transition: border-color 0.3s;">
+        </div>
 
-        <label>Телефон для связи *</label><br>
-        <input type="tel" name="phone" value="{{ user.profile.phone|default:'' }}" required style="width:100%; padding:10px; margin-bottom:15px;">
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
+                Email (для уведомлений) <span style="color: #e74c3c;">*</span>
+            </label>
+            <input type="email" name="guest_email" required
+                   value="{{ guest_email|default:'' }}"
+                   placeholder="example@mail.com"
+                   style="width: 100%; padding: 12px; border: 2px solid #ebedef; border-radius: 8px; font-family: inherit; font-size: 1rem; box-sizing: border-box; outline: none; transition: border-color 0.3s;">
+        </div>
 
-        <label>Комментарий к заказу</label><br>
-        <textarea name="comment" rows="4" style="width:100%; padding:10px; margin-bottom:20px;"></textarea>
+        {% endif %}
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">Адрес доставки *</label>
+            <textarea name="delivery_address" rows="3" placeholder="Укажите город, улицу, номер дома и квартиры" required
+                style="width: 100%; padding: 12px; border: 2px solid #ebedef; border-radius: 8px; font-family: inherit; font-size: 1rem; box-sizing: border-box; outline: none; transition: border-color 0.3s;"></textarea>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">Способ оплаты *</label>
+            <select name="payment_method" required
+                style="width: 100%; padding: 12px; border: 2px solid #ebedef; border-radius: 8px; font-family: inherit; font-size: 1rem; box-sizing: border-box; outline: none; background: white;">
+
+                <option value="" disabled selected>Выберите способ оплаты</option>
+
+                {% for value, label in payment_choices %}
+                    <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">Телефон для связи *</label>
+            <input type="tel" name="phone" value="{{ user.profile.phone|default:'' }}" placeholder="+375 (__) ___-__-__" required
+                style="width: 100%; padding: 12px; border: 2px solid #ebedef; border-radius: 8px; font-family: inherit; font-size: 1rem; box-sizing: border-box; outline: none;">
+        </div>
+
+        <div style="margin-bottom: 30px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">Комментарий к заказу</label>
+            <textarea name="comment" rows="3" placeholder="Особые пожелания или код домофона"
+                style="width: 100%; padding: 12px; border: 2px solid #ebedef; border-radius: 8px; font-family: inherit; font-size: 1rem; box-sizing: border-box; outline: none;"></textarea>
+        </div>
 
         <button type="submit" style="
-            background:#28a745;
-            color:white;
-            border:none;
-            padding:14px 30px;
-            font-size:1.1rem;
-            border-radius:10px;
-            cursor:pointer;
+            width: 100%;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         ">
-            Оформить заказ
+            Подтвердить и оформить заказ
         </button>
     </form>
 
-    <p style="margin-top:20px; text-align:center; color:#555;">
-        После оформления мы свяжемся с вами для подтверждения
+    <p style="margin-top: 30px; text-align: center; color: #95a5a6; font-size: 0.95rem;">
+        Нажимая кнопку, вы соглашаетесь с условиями обработки данных.<br>
+        Мы перезвоним вам в течение 15 минут.
     </p>
 </div>
+
 </body>
 </html>

@@ -4,7 +4,83 @@
     <meta charset="UTF-8">
     <title>Корзина</title>
 </head>
-<body style="font-family: sans-serif; background: #f4f4f4; padding: 40px;">
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif;">
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;">
+
+    <!-- Левый блок: Контакты -->
+    <div style="flex: 1; text-align: left; font-size: 0.9em; color: #444; min-width: 200px;">
+        <span style="font-weight: bold; color: #000; font-size: 1.5em;">+375-33-316-47-08</span><br>
+        <span style="font-size: 1.3em;">Время работы: пн-птн, 09:00-18:00</span>
+    </div>
+
+    <!-- Центральный блок: Слоган -->
+    <div style="flex: 3; text-align: center; padding: 0 20px;">
+        <p style="margin: 0; font-family: 'Antica', serif; font-size: 2.0em; line-height: 1.1; color: #2c3e50; font-style: italic;">
+            От земли — на ваш стол! Фермерский эталон качества
+        </p>
+    </div>
+
+    <!-- Правый блок: Личный кабинет -->
+    <div style="flex: 1; text-align: right; min-width: 200px;">
+        {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}" style="text-decoration: none; color: #333; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.2em">👤 Личный кабинет</span>
+        </a>
+        {% else %}
+        <a href="{% url 'auth' %}" style="text-decoration: none; color: #333; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.2em">👤 Войти / Регистрация</span>
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- БЛОК НАВИГАЦИИ С КОРРЕКТИРОВКОЙ ЛОГОТИПА -->
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1700px;
+            margin: 0 auto;
+            padding-left: 240px; /* Сильно увеличен отступ, чтобы логотип заходил за блок контактов */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+
+    <!-- Логотип (Увеличен) -->
+    <div style="display: flex; align-items: center; padding-right: 100px;">
+        <a href="{% url 'main' %}">
+        <!-- Измени высоту здесь (например, на 160px) -->
+            <img src="http://127.0.0.1:8000/media/uploads/logo.png"
+             alt="ЛОГОТИП"
+             style="height: 150px; width: auto; display: block;">
+        </a>
+    </div>
+
+
+    <!-- Пункты меню -->
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-grow: 1; margin-right:150px;">
+    <!-- Увеличил шрифт до 1.2em и добавил font-weight: 800 (или 700) -->
+        <a href="{% url 'main' %}" style="text-decoration: none; color: #006400; font-weight: 800; font-size: 1.3em; padding: 5px 0; ">Главная</a>
+
+    <!-- Для остальных просто увеличил font-size: 1.2em -->
+        <a href="{% url 'about' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">О нас</a>
+        <a href="{% url 'catalog' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Каталог</a>
+        <a href="{% url 'delivery' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Доставка</a>
+        <a href="{% url 'contacts' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Контакты</a>
+        <a href="{% url 'cart_detail' %}" style="text-decoration: none; color: #006400; font-weight: 600; font-size: 1.3em; padding: 5px 0;">Корзина</a>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
     <div style="max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
         <h2 style="border-bottom: 2px solid #eee; padding-bottom: 15px;">Ваша корзина</h2>
 
@@ -32,8 +108,34 @@
             </div>
         {% else %}
             <p style="text-align: center; color: #999; padding: 40px 0;">Корзина пока пуста</p>
-            <div style="text-align: center;"><a href="/" style="color: #3498db;">Перейти в каталог</a></div>
+            <div style="text-align: center;"><a href="{% url 'catalog' %}" style="color: #3498db;">Перейти в каталог</a></div>
         {% endif %}
     </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div style="style=display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #ccc;
+            white-space: nowrap;
+            width: 100%;
+            text-align: center;
+            color: #006400;
+            box-sizing: border-box; font-style: italic; font-family: 'Georgia'">
+    <p>КФХ "Левкович" - "Вкус счастья": всегда свежие фермерские продукты в Минске и Минском районе</p>
+</div>
 </body>
 </html>

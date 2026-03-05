@@ -160,24 +160,47 @@ def checkout(request):
 
     if request.method == 'POST':
         # Собираем данные из формы
+        guest_name = request.POST.get('guest_name', '') if not request.user.is_authenticated else ''
+        guest_email = request.POST.get('guest_email', '') if not request.user.is_authenticated else ''
+        guest_phone = request.POST.get('guest_phone', '') if not request.user.is_authenticated else ''
         delivery_address = request.POST.get('delivery_address', '').strip()
         phone = request.POST.get('phone', request.user.profile.phone if hasattr(request.user, 'profile') else '').strip()
+        payment_method = request.POST.get('payment_method')
         comment = request.POST.get('comment', '').strip()
 
         # Валидация (минимальная)
+        errors = []
         if not delivery_address:
-            messages.error(request, "Укажите адрес доставки")
-            return redirect('checkout')
-
+            errors.append("Укажите адрес доставки")
         if not phone:
-            messages.error(request, "Укажите телефон для связи")
-            return redirect('checkout')
+            errors.append("Укажите телефон для связи")
+        if not payment_method or payment_method not in dict(Order.PAYMENT_CHOICES):
+            errors.append("Выберите корректный способ оплаты")
+
+        if errors:
+            for msg in errors:
+                messages.error(request, msg)
+            # Лучше возвращать render с данными, а не redirect — пользователь не потеряет введённое
+            context = {
+                'delivery_address': delivery_address,
+                'phone': phone,
+                'payment_method': payment_method,
+                'comment': comment,
+                'cart_items': [...],  # как у тебя было
+                'total_price': cart.get_total_price(),
+                'payment_choices': Order.PAYMENT_CHOICES,
+            }
+            return render(request, 'checkout.html', context)
 
         # Создаём заказ
         order = Order.objects.create(
-            user=request.user,
+            user=request.user if request.user.is_authenticated else None,
+            guest_name=guest_name,
+            guest_email=guest_email,
+            guest_phone=phone,
             delivery_address=delivery_address,
             phone=phone,
+            payment_method=payment_method,
             comment=comment,
             status='new'
         )
@@ -227,6 +250,7 @@ def checkout(request):
                 'total': item_total
             })
             context['total_price'] += item_total
+            context['payment_choices'] = Order.PAYMENT_CHOICES
         except Product.DoesNotExist:
             pass
 
@@ -239,6 +263,22 @@ def orders(request):
         'orders': orders,
     }
     return render(request, 'orders.html', context)
+
+
+def order_detail(request, order_id):
+    # Получаем заказ, но только если он принадлежит текущему пользователю
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+
+    # Получаем все позиции заказа
+    items = order.items.select_related('product').all()
+
+    context = {
+        'order': order,
+        'items': items,
+        'total_price': order.total_price,
+    }
+    return render(request, 'order_detail.html', context)
+
 
 @never_cache
 @csrf_protect
@@ -285,29 +325,53 @@ def account_auth(request):
 def profile(request):
     profile = request.user.profile
 
+    orders_count = request.user.orders.count()
+
+    role = profile.role
+
+    if role == 'admin':
+        template = ''
+    elif role == 'manager':
+        template = 'manager.html'
+    else:
+        template = 'profile_user.html'
+
     context = {
         'profile': profile,
         'user': request.user,
+        'is_admin': role == 'admin',
+        'is_manager': role == 'manager',
+        'is_client': role == 'client',
+        'orders_count': orders_count,
 
     }
-    return render(request, 'profile.html', context)
+    return render(request, template, context)
 
 
-# @login_required
-# def profile_edit(request):
-#     profile = request.user.profile
-#     user_form = UserEditForm(request.POST or None, instance=request.user)
-#     profile_form = ProfileForm(request.POST or None, instance=profile)
-#
-#     if request.method == 'POST':
-#         if user_form.is_valid() and profile_form.is_valid():
-#             user_form.save()
-#             profile_form.save()
-#             messages.success(request, 'Профиль обновлён!')
-#             return redirect('profile')
-#
-#     context = {
-#         'user_form': user_form,
-#         'profile_form': profile_form,
-#     }
-#     return render(request, 'profile_edit.html', context)
+@login_required
+def profile_edit(request):
+    profile = request.user.profile
+
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+        # if profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Профиль успешно обновлён')
+            return redirect('profile')  # или 'profile_edit' — если хотите остаться на странице
+        else:
+            messages.error(request, 'Проверьте введённые данные')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileForm(instance=profile)
+
+    context = {
+        'profile_form': profile_form,
+        'user_form': user_form,   # если используете
+        'profile': profile,
+    }
+
+    return render(request, 'profile_edit.html', context)

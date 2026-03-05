@@ -21,11 +21,11 @@
             <tbody>
             {% for order in orders %}
                 <tr>
-                    <td>#{{ order.id }}</td>
+                    <td><a href="{% url 'order_detail' order.id %}">#{{ order.id }}</a></td>
                     <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
                     <td>{{ order.total_price|floatformat:2 }} ₽</td>
                     <td>{{ order.get_status_display }}</td>
-                    <td><a href="#">Подробнее</a></td>  <!-- позже сделаем detail -->
+                    <td><a href="{% url 'order_detail' order.id %}">Подробнее</a></td>
                 </tr>
             {% endfor %}
             </tbody>
