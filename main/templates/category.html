@@ -112,12 +112,26 @@
 
             <!-- Нижняя плашка (имитация кнопки или просто разделитель) -->
 <div style="padding: 20px; border-top: 1px solid #eee; text-align: center; background: #ffffff; border-radius: 0 0 15px 15px;">
+    <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px; gap: 10px;">
+        <button type="button" class="qty-btn minus" onclick="changeQty(this, -1)"
+                style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ddd; background: #fff; font-size: 1.4em; cursor: pointer; transition: 0.2s;">
+            -
+        </button>
+
+        <input type="number" name="quantity" value="1" min="1" class="qty-input"
+               style="width: 70px; height: 40px; text-align: center; font-size: 1.2em; border: 1px solid #ccc; border-radius: 8px; padding: 0 8px;">
+
+        <button type="button" class="qty-btn plus" onclick="changeQty(this, 1)"
+                style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ddd; background: #fff; font-size: 1.4em; cursor: pointer; transition: 0.2s;">
+            +
+        </button>
+    </div>
     <!-- Кнопка "В корзину" (Зеленая) -->
     <button class="btn-add js-add-to-cart"
             data-product-id="{{ product.id }}"
             data-url="{% url 'cart_add' product.id %}"
             style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 10px; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); transition: 0.3s;">
-        + В корзину
+        В корзину
     </button>
 
     <!-- Ссылка "Подробнее" (Жирная) -->
@@ -151,12 +165,21 @@
     <p>КФХ "Левкович" - "Вкус счастья": всегда свежие фермерские продукты в Минске и Минском районе</p>
 </div>
 <script>
+    function changeQty(btn, delta) {
+    const input = btn.parentElement.querySelector('.qty-input');
+    let val = parseInt(input.value) || 1;
+    val = Math.max(1, val + delta);
+    input.value = val;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".js-add-to-cart").forEach(btn => {
         btn.addEventListener("click", async (e) => {
             e.preventDefault();
 
             const url = btn.dataset.url;
+            const qtyInput = btn.parentElement.querySelector('.qty-input');
+            const quantity = parseInt(qtyInput.value) || 1;
 
             try {
                 const response = await fetch(url, {
@@ -166,26 +189,27 @@ document.addEventListener("DOMContentLoaded", () => {
                         "X-Requested-With": "XMLHttpRequest",
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ quantity: 1 })
+                    body: JSON.stringify({ quantity: quantity })
                 });
-
-                if (!response.ok) throw new Error("Ошибка");
 
                 const data = await response.json();
 
                 if (data.success) {
-                    // Показываем уведомление (можно заменить на красивый toast)
-                    alert(data.message);
+                    // Красивое уведомление (Toastify, если подключил)
+                    // или просто alert:
+                    alert(data.message || `Добавлено ${quantity} шт. в корзину!`);
 
-                    // Обновляем счётчик корзины в шапке, если есть
+                    // Обновляем счётчик корзины
                     const cartCount = document.querySelector("#cart-count");
                     if (cartCount) {
-                        cartCount.textContent = data.total_items;
+                        cartCount.textContent = data.total_items || data.cart_total_items || 0;
                     }
+                } else {
+                    alert(data.error || "Не удалось добавить");
                 }
             } catch (err) {
                 console.error(err);
-                alert("Не удалось добавить товар");
+                alert("Ошибка при добавлении товара");
             }
         });
     });

@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main.views import get_main, get_about, get_catalog, get_category_catalog, get_delivery, get_contacts, cart_add, \
-    cart_detail, account_auth, profile, checkout, orders, order_detail, profile_edit
+    cart_detail, account_auth, profile, checkout, orders, order_detail, profile_edit, cart_remove, cart_update
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -32,9 +32,11 @@ urlpatterns = [
     path('contacts/', get_contacts, name = 'contacts'),
     path('cart/', cart_detail, name = 'cart_detail'),
     path('cart/add/<int:product_id>/', cart_add, name='cart_add'),
+    path('cart/remove/<int:product_id>/', cart_remove, name='cart_remove'),
+    path('cart/update/<int:product_id>/', cart_update, name='cart_update'),
     path('checkout/', checkout, name='checkout'),
     path('orders/', orders, name='orders'),
-    path('orders/<int:order_id>/', order_detail, name='order_detail'),
+    path('orders/<int:pk>/', order_detail, name='order_detail'),
     path('auth/', account_auth, name = 'auth'),
     path('profile/', profile, name = 'profile'),
     path('profile/edit/', profile_edit, name = 'profile_edit'),

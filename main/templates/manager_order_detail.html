@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ #{{ order.id }} — Детали</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body { background: #f8f9fa; padding: 20px; }
+        .card { border: none; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; }
+        .badge { padding: 0.6em 1em; font-weight: 500; }
+        .badge-new { background: #ffc107; color: #212529; }
+        .badge-processing { background: #0d6efd; }
+        .badge-shipped { background: #198754; }
+        .badge-delivered { background: #198754; font-weight: bold; }
+        .badge-cancelled { background: #dc3545; }
+        .badge-returned { background: #6c757d; }
+        .status-select { max-width: 220px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Заказ #{{ order.id }}</h2>
+        <a href="{% url 'profile' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>Назад к списку
+        </a>
+    </div>
+
+    {% if success_message %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ success_message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+
+    <!-- Основная информация -->
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">Информация о заказе</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <strong>Клиент:</strong><br>
+                    {% if order.user %}
+                        {{ order.user.profile.get_full_name|default:"Клиент" }}<br>
+                        <small>{{ order.user.email }}</small>
+                    {% else %}
+                        {{ order.guest_name|default:"Гость" }}<br>
+                        <small>{{ order.guest_email|default:"—" }}</small>
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <strong>Телефон:</strong><br>
+                    {{ order.phone|default:order.guest_phone|default:"—" }}
+                    {% if order.phone or order.guest_phone %}
+                        <a href="tel:{{ order.phone|default:order.guest_phone }}" class="ms-2 text-success">
+                            <i class="bi bi-telephone-fill"></i> Позвонить
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <strong>Способ оплаты:</strong><br>
+                    {{ order.get_payment_method_display }}
+                </div>
+                <div class="col-12">
+                    <strong>Адрес доставки:</strong><br>
+                    {{ order.delivery_address|linebreaks|default:"Самовывоз" }}
+                </div>
+                <div class="col-md-6">
+                    <strong>Желаемая дата доставки:</strong><br>
+                    {{ order.delivery_date|date:"d.m.Y"|default:"—" }}
+                </div>
+                <div class="col-md-6">
+                    <strong>Создан:</strong><br>
+                    {{ order.created_at|date:"d.m.Y H:i" }}
+                </div>
+                <div class="col-12">
+                    <strong>Комментарий клиента:</strong><br>
+                    <div class="bg-light p-3 rounded">
+                        {{ order.comment|linebreaks|default:"—" }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Товары -->
+    <div class="card mb-4">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Товары</h5>
+            <span class="badge fs-5">{{ order.total_price|floatformat:0 }} ₽</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Товар</th>
+                            <th class="text-center">Кол-во</th>
+                            <th class="text-end">Цена</th>
+                            <th class="text-end">Сумма</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>
+                                {{ item.product.name|default:"Товар удалён" }}
+                                {% if item.product.category %}
+                                    <small class="text-muted d-block">({{ item.product.category.name }})</small>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">{{ item.quantity }} {{ item.product.unit|default:"шт" }}</td>
+                            <td class="text-end">{{ item.price_at_order|floatformat:0 }} ₽</td>
+                            <td class="text-end fw-bold">{{ item.get_subtotal|floatformat:0 }} ₽</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center py-4 text-muted">Товары отсутствуют</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Изменение статуса -->
+    <div class="card mb-4">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Текущий статус</h5>
+            <span class="badge badge-{{ order.status }} fs-5 px-4 py-2">
+                {{ order.get_status_display }}
+            </span>
+        </div>
+        <div class="card-body">
+            <form method="post" class="row g-3">
+                {% csrf_token %}
+
+                <div class="col-md-6">
+                    <label for="status" class="form-label fw-medium">Новый статус</label>
+                    <select name="status" id="status" class="form-select status-select">
+                        {% for value, label in status_choices %}
+                            <option value="{{ value }}" {% if order.status == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label for="comment" class="form-label fw-medium">Комментарий менеджера (добавится к существующему)</label>
+                    <textarea name="comment" id="comment" class="form-control" rows="3" placeholder="Например: клиент попросил позвонить перед доставкой"></textarea>
+                </div>
+
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary px-4 py-2">
+                        <i class="bi bi-save me-1"></i> Сохранить изменения
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="text-muted small text-center">
+        Последнее обновление: {{ order.updated_at|date:"d.m.Y H:i" }}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

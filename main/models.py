@@ -193,6 +193,25 @@ class OrderItem(models.Model):
         verbose_name='Цена на момент заказа'
     )  # фиксируем цену, чтобы изменения не влияли на старые заказы
 
+    manager = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='managed_orders',
+        verbose_name='Ответственный менеджер'
+    )
+
+    # и желательно поле для отслеживания, кто последний раз менял статус
+    last_modified_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='modified_orders',
+        verbose_name='Последний редактор'
+    )
+
     class Meta:
         verbose_name = 'Позиция заказа'
         verbose_name_plural = 'Позиции заказа'
