@@ -3,32 +3,44 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, User
 from django import forms
 from main.models import Profile
 
-
-# class ClientRegistrationForm(UserCreationForm):
-#     class Meta:
-#         model = CustomUser
-#         fields = ('email', 'password1', 'password2')
-#
-#     def save(self, commit=True):
-#         user = super().save(commit=False)
-#         user.is_active = True
-#         if commit:
-#             user.save()
-#         return user
 User = get_user_model()
 
 class ClientRegistrationForm(UserCreationForm):
+    email = forms.EmailField(
+        label='Email',
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Введите email-адрес'
+        })
+    )
+
+    password1 = forms.CharField(
+        label='Пароль',
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Введите пароль'
+        })
+    )
+
+    password2 = forms.CharField(
+        label='Подтвердите пароль',
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Повторите пароль'
+        })
+    )
+
     class Meta:
         model = User
         fields = ('email', 'password1', 'password2')
-        labels = {
-            'email': 'Ваш email адрес',
-            'password1': 'Пароль',
-            'password2': 'Подтвердите пароль'
-        }
+
     def save(self, commit=True):
         user = super().save(commit=False)
         user.username = user.email
+        user.email = user.email
         if commit:
             user.save()
             if hasattr(user, 'profile'):
@@ -39,8 +51,13 @@ class ClientRegistrationForm(UserCreationForm):
 class EmailAuthenticationForm(AuthenticationForm):
     username = forms.EmailField(
         widget=forms.EmailInput(attrs={'autofocus': True}),
-        label='Email',
+        label='Ваш email',
         max_length=254,
+    )
+    password = forms.CharField(
+        label='Пароль',
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'current-password'}),
     )
 
 class ProfileForm(forms.ModelForm):

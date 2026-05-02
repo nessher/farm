@@ -343,21 +343,6 @@ def orders(request):
     return render(request, 'orders.html', context)
 
 
-# def order_detail(request, order_id):
-#     # Получаем заказ, но только если он принадлежит текущему пользователю
-#     order = get_object_or_404(Order, id=order_id, user=request.user)
-#
-#     # Получаем все позиции заказа
-#     items = order.items.select_related('product').all()
-#
-#     context = {
-#         'order': order,
-#         'items': items,
-#         'total_price': order.total_price,
-#     }
-#     return render(request, 'order_detail.html', context)
-
-
 @never_cache
 @csrf_protect
 def account_auth(request):

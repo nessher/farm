@@ -5,7 +5,6 @@
     <title>Главная страница</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif;">
-
 <!-- Ваш верхний серый контейнер -->
 <div style="display: flex;
             justify-content: space-between;
@@ -79,25 +78,22 @@
     </div>
 </div>
 
-<div style="position: relative; width: 100%; height: 650px;">
-    <!-- Картинка как фон -->
+<div style="position: relative; width: 100%; height: 700px;">
+    <!-- Картинка автоматически подстроится под новую высоту родителя -->
     <img src="http://127.0.0.1:8000/media/uploads/vegatables.jpg"
          alt="Картинка для первого фона"
          style="height: 100%; width: 100%; object-fit: cover; display: block;">
 
-    <!-- Блок ТЕКСТА (прижат к верхнему краю) -->
+    <!-- Блок ТЕКСТА -->
     <div style="position: absolute;
-                top: 5%; /* Регулируй этот процент, чтобы поднять еще выше */
+                top: 5%;
                 left: 5%;
                 color: #006400;
                 text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
                 font-family: 'Book Antiqua', serif;">
         <h1 style="margin: 0; font-size: 2.5em; font-weight: 800; line-height: 1; ">«Настоящая королева стола:</h1>
         <h1 style="margin: 10px 0 0 0; font-size: 2.0em; font-weight: 300; letter-spacing: 2px;">отборная фермерская картошечка и свежие овощи прямо с грядок»</h1>
-        <br>
-        <br>
-        <br>
-        <br>
+        <br><br><br><br>
         <span style="font-size: 1.3em; font-style: italic; font-family: 'Georgia'">
             Наши овощи не безликий товар! Это помидоры -
         </span><br>
@@ -112,13 +108,15 @@
         </span>
     </div>
 
-    <!-- Блок КНОПКИ (прижат к нижнему краю) -->
+    <!-- Блок КНОПКИ -->
     <div style="position: absolute;
-                bottom: 18%; /* Кнопка в 10% от низа картинки */
-                left: 10%;">
-        <a href="#order-form" style="display: inline-block;
+                bottom: 12%; /* Немного уменьшил %, чтобы кнопка визуально осталась на месте при новой высоте */
+                left: 10%; ">
+        <a href="#order-form"
+           onclick="document.getElementById('order-form').scrollIntoView({behavior: 'smooth'}); return false;"
+           style="display: inline-block;
                            padding: 15px 50px;
-                           background-color: #006400; /* Чуть плотнее, чтобы не терялась */
+                           background-color: #006400;
                            color: white;
                            text-decoration: none;
                            font-size: 1.5em;
