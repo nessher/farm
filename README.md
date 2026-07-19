@@ -97,11 +97,11 @@ This is a full-featured **online store** for a family farm. It serves as a comme
 **This project is a portfolio piece and is not currently open for contributions.**
 
 
-###📄 License
+### 📄 License
 **This project is for portfolio purposes. All rights reserved.**
 
 
-###👩‍💻 Authors
+### 👩‍💻 Authors
 **Hanna Andrasiuk (nessher) and Kiryl Sharmetau (@krlxmnd)**
 
 GitHub: nessher
