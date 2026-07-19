@@ -31,15 +31,17 @@ This is a full-featured **online store** for a family farm. It serves as a comme
 - **Hosting**: Deployed on **GitHub Pages** (for static parts) and configured for dynamic hosting.
 
 ## 🗂️ Project Structure
-farm/
-├── main/ # Main application with core models and views
-├── config/ # Project settings and URLs
-├── media/ # User-uploaded product images
-├── static/ # Static files (CSS, JS)
-├── Dockerfile # Docker configuration for containerization
-├── docker-compose.yml # Docker Compose for multi-container setup
-├── manage.py # Django management script
-└── requirements.txt # Python dependencies
+  ```
+  farm/
+  ├── main/                 # Main application with core models and views
+  ├── config/               # Project settings and URLs
+  ├── media/                # User-uploaded product images
+  ├── static/               # Static files (CSS, JS)
+  ├── Dockerfile            # Docker configuration for containerization
+  ├── docker-compose.yml    # Docker Compose for multi-container setup
+  ├── manage.py             # Django management script
+  └── requirements.txt      # Python dependencies
+  ```
 
 ## 🚀 Getting Started
 
