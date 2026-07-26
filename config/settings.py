@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +20,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9p7%a6air5ibae$p6y6%-)1bfqo+&2201%pk1)3aixo4r(t!+f'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+# if os.environ.get('VERCEL'):
+#     DEBUG = False
+
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    '0.0.0.0',
+    'localhost',
+]
 
 
 # Application definition
@@ -75,8 +82,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres_database',
+        'USER': 'postgres_admin',
+        'PASSWORD': 'kfh_base',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
@@ -129,7 +140,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = 'main'
 
-TELEGRAM_BOT_TOKEN = '8446389475:AAGWMsq8RcYhu8LEt5qVX6pwAc6L3jT70EI'
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 TELEGRAM_ADMIN_CHAT_ID = '444310243'
 
 LOGOUT_REDIRECT_URL = 'main'

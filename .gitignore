@@ -1,0 +1,44 @@
+# Секреты
+.env
+.env.local
+.env.production
+
+# База данных
+db.sqlite3
+*.sqlite3
+
+# Python кеш
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.pyc
+
+# Медиа и статика
+/media/
+media/
+/staticfiles/
+staticfiles/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ОС
+.DS_Store
+Thumbs.db
+
+# Логи
+*.log
+
+# Миграции (__pycache__ внутри них)
+**/migrations/__pycache__/
+
+# Виртуальное окружение
+.venv/
+venv/
+env/
+ENV/

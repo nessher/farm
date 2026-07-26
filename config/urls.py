@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from main.views import get_main, get_about, get_catalog, get_category_catalog, get_delivery, get_contacts, cart_add, \
     cart_detail, account_auth, profile, checkout, orders, order_detail, profile_edit, cart_remove, cart_update
 from django.conf import settings
