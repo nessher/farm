@@ -21,4 +21,5 @@ EXPOSE 8000
 # Команда по умолчанию (для разработки)
 #CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 #CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
-CMD ["sh", "-c", "python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:8000"]
+#CMD ["sh", "-c", "python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:8000"]
