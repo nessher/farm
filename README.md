@@ -9,7 +9,7 @@
 
 This is a full-featured **online store** for a family farm. It serves as a commercial platform for selling agricultural products. The project demonstrates a complete e-commerce workflow, from product browsing to order management.
 
-**Live Demo**: [https://nessher.github.io/farm/](https://nessher.github.io/farm/)
+**Live Demo**: [https://nessher.github.io/farm/](https://nessher.github.io/farm/](https://farm-kfh.up.railway.app/)
 
 ## ✨ Key Features
 
