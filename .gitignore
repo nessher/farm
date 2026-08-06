@@ -20,6 +20,7 @@ __pycache__/
 media/
 /staticfiles/
 staticfiles/
+static
 
 # IDE
 .idea/
