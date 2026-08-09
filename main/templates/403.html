@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступ запрещён</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .error-container {
+            max-width: 600px;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 72px;
+            margin: 0;
+            color: #ffc107;
+        }
+        h2 {
+            font-size: 28px;
+            color: #333;
+            margin: 10px 0;
+        }
+        p {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #006400;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        a:hover {
+            background: #004d00;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>403</h1>
+        <h2>Доступ запрещён</h2>
+        <p>У вас нет прав для просмотра этой страницы.</p>
+        <a href="{% url 'main' %}">На главную</a>
+    </div>
+</body>
+</html>
