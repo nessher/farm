@@ -40,7 +40,7 @@ This is a full-featured **online store** for a family farm (KFH). The project de
   │ ├── models.py
   │ ├── views.py
   │ ├── cart.py             # Shopping cart logic
-  │ ├── telegram.py # Telegram notification functions
+  │ ├── telegram.py         # Telegram notification functions
   │ └── ...
   ├── media/                # User-uploaded product images (mounted as a Docker volume)
   ├── static/               # Static files (CSS, JS, images)
