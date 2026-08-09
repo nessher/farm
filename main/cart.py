@@ -38,8 +38,9 @@ class Cart:
         self.session.modified = True
 
     def clear(self):
-        del self.session['cart']
-        self.save()
+        self.cart = {}
+        self.session['cart'] = {}
+        self.session.modified = True
 
     def get_total_items(self):
         """Возвращает общее количество всех товаров в корзине (для бейджа)"""
