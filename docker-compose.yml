@@ -3,12 +3,8 @@ services:
     image: postgres:16-alpine
     container_name: postgres_db
     restart: always
-    environment:
-      POSTGRES_DB: postgres_database
-      POSTGRES_USER: postgres_admin
-      POSTGRES_PASSWORD: kfh_base
-    ports:
-      - "5433:5432"
+    env_file:
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
@@ -16,17 +12,17 @@ services:
     build: .
     container_name: django_web
     restart: always
-    command: sh -c "sleep 12 && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "sleep 12 && python manage.py collectstatic --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3"
     volumes:
       - .:/code
-      - ./media:/code/media
-      - ./static:/code/static
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     depends_on:
       - db
     env_file:
       - .env
+    ports:
+      - "127.0.0.1:8000:8000"
 
 volumes:
   postgres_data:

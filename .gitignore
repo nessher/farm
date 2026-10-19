@@ -42,3 +42,10 @@ Thumbs.db
 venv/
 env/
 ENV/
+.env
+*.bak
+logs/
+staticfiles/
+media/
+__pycache__/
+*.pyc
