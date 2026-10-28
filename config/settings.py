@@ -33,8 +33,9 @@ if os.environ.get('DEBUG') == 'True':
 # if os.environ.get('VERCEL'):
 #     DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', '185.66.68.198', 'farm.nessher.dev', 'www.farm.nessher.dev']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', '185.66.68.198', 'nessher.dev', 'www.nessher.dev']
 
+CSRF_TRUSTED_ORIGINS = ['https://nessher.dev', 'https://www.nessher.dev']
 # Application definition
 
 INSTALLED_APPS = [
