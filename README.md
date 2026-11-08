@@ -9,7 +9,6 @@
 
 This is a full-featured **online store** for a family farm (KFH). The project demonstrates a complete e-commerce workflow, from product browsing to order management, with a focus on practicality and security.
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-VPS-green)](http://185.66.68.198:8000)
 
 ## ✨ Key Features
 
